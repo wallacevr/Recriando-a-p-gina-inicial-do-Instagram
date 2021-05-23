@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/main.css">
+
+    <!--owl css-->
+    <link rel="stylesheet" href="style/owl/owl.carousel.min.css">
+    <link rel="stylesheet" href="style/owl/owl.theme.default.min.css">
+    <!--Responsividade-->
+    <link rel="stylesheet" href="style/responsive.css">
+    <title>RISOFLIX</title>
+</head>
+<body>
+    <HEAder>
+        <div class="container">
+        <h2 class="logo">RISOFLIX</h2>
+        <nav>
+            <a href="#">PAULO GUSTAVO</a>
+            <a href="#">SERIES BRASILEIRAS</a>
+            <a href="#">SERIES INTERNACIONAIS</a>
+            <a href="#">FILMES BRASILEIROS</a>
+            <a href="#">FILMES INTERNACINAIS</a>
+        </nav>
+    </div>
+    </HEAder>
+    <main>
+        <div class="filme-principal" id="exibir" style="display: none;"></div>
+        <div class="filme-principal" id="filme-principal">
+            <div class="container">
+                <h3 class="titulo" id="titulo" >MINHA MAE É UMA PEÇA 3</h3>
+                <P class="descricao" id="descricao">Dona Hermínia (Paulo Gustavo) vai ter que se redescobrir e se reinventar porque seus filhos estão formando novas famílias. Essa supermãe vai ter que segurar a emoção para lidar com um novo cenário de vida: Marcelina (Mariana Xavier) está grávida e Juliano (Rodrigo Pandolfo) vai casar. Dona Hermínia está mais ansiosa do que nunca! Para completar as confusões, Carlos Alberto (Herson Capri), seu ex-marido, que esteve sempre por perto, agora resolve ficar ainda mais próximo.</P>
+           
+             <div class="botoes">
+                <button role="button" id="btn-assistir" class="botao" data-toggle="modal" data-target="#videoModal" data-url="<iframe width='100%' height='400' src='https://www.youtube.com/embed/-wFkSsPR-ys' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>"><i class="fas fa-play"></i>ASSISTIR AGORA</button>
+                <button role="button" class="botao"><i class="fas fa-info-circle"></i>MAIS INFORMAÇÕES</button>
+             </div>   
+            </div>     
+        </div>
+        <div class="carrosel-filmes">
+            <div class="owl-carousel owl-theme">
+                <div class="item" >
+                    <img class="box-filme" src="img/mini1.jpg" alt="" onclick="loadDoc(1);">
+                </div>
+                <div class="item" >
+                    <img class="box-filme" src="img/mini2.jpg" alt="" onclick="loadDoc(2);">
+                </div>
+                <div class="item">
+                    <img class="box-filme" src="img/mini3.jpg" alt="" onclick="loadDoc(3);">
+                </div>
+                <div class="item">
+                    <img class="box-filme" src="img/mini4.jpg" alt="" onclick="loadDoc(4);">
+                </div>
+                <div class="item">
+                    <img class="box-filme" src="img/mini5.jpg" alt="" onclick="loadDoc(5);">
+                </div>
+          <!--      <div class="item">
+                    <img class="box-filme" src="img/mini6.jpg" alt="" onclick="loadDoc(6);">
+                </div>
+                <div class="item">
+                    <img class="box-filme" src="img/mini7.jpg" alt="" onclick="loadDoc(7);">
+                </div>
+                <div class="item">
+                    <img class="box-filme" src="img/mini6.jpg" alt="" onclick="loadDoc(8);">
+                </div>
+                <div class="item">
+                    <img class="box-filme" src="img/mini9.jpg" alt="" onclick="loadDoc(9);">
+                </div>
+                <div class="item">
+                    <img class="box-filme" src="img/mini10.jpg" alt="" onclick="loadDoc(10);">
+                </div>
+                <div class="item">
+                    <img class="box-filme" src="img/mini11.jpg" alt="" onclick="loadDoc(11);">
+                </div>
+                <div class="item">
+                    <img class="box-filme" src="img/mini12.jpg" alt="" onclick="loadDoc(12);">
+                </div>
+            -->    
+
+            </div>
+        </div>
+          </main>
+    <script src="https://kit.fontawesome.com/2c36e9b7b1.js"></script>    
+    <script src="js/owl/jquery.min.js"></script>
+    <script src="js/owl/owl.carousel.min.js"></script>
+    <script src="js/owl/setup.js"></script>
+    <script>
+        function loadDoc(cod) {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                
+                myFunction(this,cod);
+            }
+          };
+          xhttp.open("GET", "catalog.xml", true);
+          xhttp.send();
+        }
+        function myFunction(xml,id) {
+            
+          var i;
+          var xmlDoc = xml.responseXML;
+          
+          var x = xmlDoc.getElementsByTagName("VIDEOS");
+          
+          for (i = 0; i <x.length; i++) { 
+               
+             if(x[i].getElementsByTagName("ID")[0].childNodes[0].nodeValue==id){  
+                
+                document.getElementById("titulo").innerHTML=x[i].getElementsByTagName("TITLE")[0].childNodes[0].nodeValue;
+                document.getElementById("descricao").innerHTML=x[i].getElementsByTagName("DESCRICAO")[0].childNodes[0].nodeValue;
+                var caminho = document.getElementById('btn-assistir');
+                caminho.dataset.url = x[i].getElementsByTagName("URL")[0].childNodes[0].nodeValue;
+                //document.getElementById("exibir").hide();
+                document.getElementById("filme-principal").style.backgroundImage = "url("+ x[i].getElementsByTagName("POSTER")[0].childNodes[0].nodeValue +")";
+            } 
+            }
+
+        }
+        </script>
+
+</body>
+</html>
